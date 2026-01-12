@@ -44,9 +44,9 @@ Adoptium API에서 최신 JDK 다운로드 링크를 가져와 `version.properti
 
 1. `version.properties`에서 지원 버전과 다운로드 URL 읽기
 2. 동일한 zip 파일이 이미 있으면 다운로드 생략 (재다운로드는 `-Force` 옵션)
-3. `jdks/archive/{버전}/` 디렉토리에 파일 다운로드
+3. `jdks\archive\{버전}\` 디렉토리에 파일 다운로드
 4. 임시 폴더에 압축 해제 후 내부 폴더를 `latest`로 이동
-5. jdks 폴더에 junction link 생성 (`jdks/17` → `jdks/archive/17/latest`)
+5. jdks 폴더에 junction link 생성 (`jdks\17` → `jdks\archive\17\latest`)
 
 ## 폴더 구조
 
@@ -95,7 +95,7 @@ git clone https://github.com/fp024/win-jdk-manager
 ### 2. C:\JDK로 Junction Link 생성
 관리자 권한 명령 프롬프트에서 실행:
 ```cmd
-mklink /J C:\JDK C:\git\win-jdk-manager/jdks
+mklink /J C:\JDK C:\git\win-jdk-manager\jdks
 ```
 
 이렇게 하면 `C:\JDK`로 접근할 수 있고, 환경 변수에서도 `C:\JDK\17\bin` 같은 경로를 사용할 수 있음.
