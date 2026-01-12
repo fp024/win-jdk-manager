@@ -68,8 +68,7 @@ C:\JDK\
   │       │   └── ...
   │       └── 25/
   │           └── ...
-  ├── docs/
-  │   └── requirements.md
+  │
   ├── version.properties
   ├── update-version-props.ps1
   ├── update-version-props.bat
