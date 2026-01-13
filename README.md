@@ -51,7 +51,7 @@ Adoptium API에서 최신 JDK 다운로드 링크를 가져와 `version.properti
 ## 폴더 구조
 
 ```
-C:\JDK\
+C:\JDK\                          # junction link → C:\git\win-jdk-manager
   ├── jdks/                      # JDK 설치 폴더 (.gitignore에 포함)
   │   ├── 8/                     # junction link → archive/8/latest
   │   ├── 17/                    # junction link → archive/17/latest
