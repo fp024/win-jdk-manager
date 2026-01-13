@@ -101,7 +101,7 @@ mklink /J C:\JDK C:\git\win-jdk-manager\jdks
 
 ### 3. JDK 다운로드
 ```cmd
-cd C:\JDK
+cd C:\git\win-jdk-manager
 .\update-jdk.bat all
 ```
 
