@@ -52,21 +52,21 @@ Adoptium API에서 최신 JDK 다운로드 링크를 가져와 `version.properti
 
 ```
 C:\JDK\                          # junction link → C:\git\win-jdk-manager
-  ├── jdks/                      # JDK 설치 폴더 (.gitignore에 포함)
-  │   ├── 8/                     # junction link → archive/8/latest
-  │   ├── 17/                    # junction link → archive/17/latest
-  │   ├── 21/                    # junction link → archive/21/latest
-  │   ├── 25/                    # junction link → archive/25/latest
-  │   └── archive/
-  │       ├── 8/
+  ├── jdks\                      # JDK 설치 폴더 (.gitignore에 포함)
+  │   ├── 8\                     # junction link → archive\8\latest
+  │   ├── 17\                    # junction link → archive\17\latest
+  │   ├── 21\                    # junction link → archive\21\latest
+  │   ├── 25\                    # junction link → archive\25\latest
+  │   └── archive\
+  │       ├── 8\
   │       │   ├── OpenJDK8U-xxx.zip  # 다운로드한 파일
-  │       │   └── latest/            # 압축 해제된 JDK (bin, lib, ...)
-  │       ├── 17/
+  │       │   └── latest\            # 압축 해제된 JDK (bin, lib, ...)
+  │       ├── 17\
   │       │   ├── OpenJDK17U-xxx.zip
-  │       │   └── latest/
-  │       ├── 21/
+  │       │   └── latest\
+  │       ├── 21\
   │       │   └── ...
-  │       └── 25/
+  │       └── 25\
   │           └── ...
   │
   ├── version.properties
