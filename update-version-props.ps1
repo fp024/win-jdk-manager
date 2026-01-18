@@ -19,6 +19,7 @@ if (-not $match.Success) {
 $versions = $match.Groups[1].Value.Split(' ', [System.StringSplitOptions]::RemoveEmptyEntries)
 
 $urls = @{}
+$versionNames = @{}
 foreach ($ver in $versions) {
     $url = "$ApiRoot/$ver/hotspot?architecture=x64&os=windows&image_type=jdk"
     $resp = Invoke-RestMethod -UseBasicParsing -Uri $url -Method Get
@@ -31,6 +32,7 @@ foreach ($ver in $versions) {
         Write-Error "Could not read download link for version $ver"
         exit 1
     }
+    $versionNames[$ver] = $resp[0].release_name
     try {
         $head = Invoke-WebRequest -UseBasicParsing -Uri $link -Method Head -ErrorAction Stop
         if ($head.StatusCode -ne 200) {
@@ -46,11 +48,18 @@ foreach ($ver in $versions) {
 }
 
 $lines = Get-Content -LiteralPath $FilePath
+$updatedVersions = @()
+
 for ($i = 0; $i -lt $lines.Count; $i++) {
-    if ($lines[$i] -match '^JDK_URL_(\d+)=') {
+    if ($lines[$i] -match '^JDK_URL_(\d+)=(.*)$') {
         $ver = $Matches[1]
+        $currentUrl = $Matches[2]
         if ($urls.ContainsKey($ver)) {
-            $lines[$i] = "JDK_URL_${ver}=$($urls[$ver])"
+            $newUrl = $urls[$ver]
+            if ($currentUrl -ne $newUrl) {
+                $lines[$i] = "JDK_URL_${ver}=${newUrl}"
+                $updatedVersions += $ver
+            }
             $urls.Remove($ver) | Out-Null
         }
     }
@@ -58,7 +67,18 @@ for ($i = 0; $i -lt $lines.Count; $i++) {
 
 foreach ($kvp in $urls.GetEnumerator()) {
     $lines += "JDK_URL_$($kvp.Key)=$($kvp.Value)"
+    $updatedVersions += $kvp.Key
 }
 
-Set-Content -LiteralPath $FilePath -Value $lines
-Write-Host "Updated $FilePath"
+if ($updatedVersions.Count -eq 0) {
+    Write-Host "Already up to date."
+}
+else {
+    Set-Content -LiteralPath $FilePath -Value $lines
+    Write-Host "Updated versions:"
+    $updatedVersions | Sort-Object | ForEach-Object { 
+        $name = $versionNames[$_]
+        Write-Host "  - JDK $($_): $name" 
+    }
+    Write-Host "Updated $FilePath"
+}
